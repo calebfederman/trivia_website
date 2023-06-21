@@ -1,19 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-    </head>
-    <body>
-        <h1>Team Details</h1>
+{% extends '..\templates\league\base.html' %} 
 
-        <p>Team Name: {{ team.team_name }}</p>
-        <p>Short Name: {{ team.short_name }}</p>
-        <!--<p>Logo: <img src="{{ team.logo.url }}" alt="{{ team.team_name }} Logo"></p>-->
-        <p>Win Count: {{ team.win_count }}</p>
-        <p>Loss Count: {{ team.loss_count }}</p>
+{% block title%}{{team.team_name}}{% endblock %} 
 
-    </body>
-</html>
+{% block content %}
+
+<h1>{{ team.team_name }}</h1>
+<p>{{ team.win_count }} - {{ team.loss_count }}</p>
+
+<ul class="nav nav-tabs justify-content-center">
+    <li class="nav-item">
+        <a href="#stats" class="nav-link active" data-bs-toggle="tab">Stats</a>
+    </li>
+    <li class="nav-item">
+        <a href="#roster" class="nav-link" data-bs-toggle="tab">Roster</a>
+    </li>
+    <li class="nav-item">
+        <a href="#schedule" class="nav-link" data-bs-toggle="tab">Schedule</a>
+    </li>
+</ul>
+
+<div class="tab-content">
+
+    <div class="tab-pane fade show active" id="stats">
+        <p>There are no stats for {{ team.team_name }} at this time...</p>
+    </div>
+
+    <div class="tab-pane fade" id="roster">
+        {% if players %}
+        <ul>
+            {% for player in players %}
+            <li>{{ player.player_name }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>There are no players for {{ team.team_name }} at this time...</p>
+        {% endif %}
+    </div>
+
+    <div class="tab-pane fade" id="schedule">
+        {% if matchups %}
+        <ul>
+            {% for matchup in matchups %}
+            <li>
+                <a href="{% url 'league:matchup_detail' matchup.id %}">Week 
+                    {{matchup.week }} - {{ matchup.home_team }} vs {{matchup.away_team }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>There are no matches scheduled for {{ team.team_name }} at this time...</p>
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock %}

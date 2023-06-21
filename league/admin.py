@@ -4,20 +4,20 @@ from django.contrib import admin
 
 from .models import Team, Season, Player, Matchup
 
+class PlayerInline(admin.StackedInline):
+    model = Player
+    extra = 0
+
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
     list_display = ('team_name', 'win_count', 'loss_count')
     search_fields = ('team_name',)
+    inlines = [PlayerInline]
 
 @admin.register(Season)
 class SeasonAdmin(admin.ModelAdmin):
     list_display = ('season_number', 'current')
     list_filter = ('current',)
-
-@admin.register(Player)
-class PlayerAdmin(admin.ModelAdmin):
-    list_display = ('player_name', 'team', 'season')
-    list_filter = ('team', 'season')
 
 @admin.register(Matchup)
 class MatchupAdmin(admin.ModelAdmin):

@@ -1,19 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-    </head>
-    <body>
-        <h1>Matchup Details</h1>
+{% extends '..\templates\league\base.html' %}
+
+{% block title %}{{ matchup.away_team.short_name }} vs. {{ matchup.home_team.short_name }}{% endblock %}
+
+{% block content %}
+        <h1><a href="{% url 'league:team_detail' matchup.away_team.id %}">{{ matchup.away_team }}</a> vs. <a href="{% url 'league:team_detail' matchup.home_team.id %}">{{ matchup.home_team }}</a></h1>
 
         <p>Date: {{ matchup.date }}</p>
-        <p>Home Team: {{ matchup.home_team }}</p>
-        <p>Away Team: {{ matchup.away_team }}</p>
-        <p>Home Team Score: {{ matchup.home_team_score }}</p>
-        <p>Away Team Score: {{ matchup.away_team_score }}</p>
-
-    </body>
-</html>
+        <p>Score: {{ matchup.away_team_score }} - {{ matchup.home_team_score }}</p>
+{% endblock %}

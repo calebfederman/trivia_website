@@ -21,8 +21,8 @@ class PlayerModelTest(TestCase):
 
 class MatchupModelTest(TestCase):
     def test_Matchup_model_str_representation(self):
-        team1 = Team(team_name='Team A', short_name='A', logo='team_a.png')
-        team2 = Team(team_name='Team B', short_name='B', logo='team_b.png')
+        team1 = Team(team_name='Team A', short_name='A')
+        team2 = Team(team_name='Team B', short_name='B')
         matchup = Matchup(date='2023-06-19', home_team=team1, away_team=team2)
         expected_str = 'Team B vs Team A on 2023-06-19'
         self.assertEqual(str(matchup), expected_str)

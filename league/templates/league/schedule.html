@@ -1,23 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Schedule</title>
-    </head>
-    <body>
+{% extends '..\templates\league\base.html' %}
+
+{% block title %}Schedule{% endblock %}
+
+{% block content %}
         <h1>Schedule</h1>
 
         <ul>
             {% for matchup in matchups %}
             <li>
-                <a href="{% url 'trivia:matchup_detail' matchup.id %}">{{
-                    matchup.date }} - {{ matchup.home_team }} vs {{
-                    matchup.away_team }}</a>
+                <a href="{% url 'league:matchup_detail' matchup.id %}">Week 
+                    {{matchup.week }} - {{ matchup.home_team }} vs {{matchup.away_team }}</a>
             </li>
             {% endfor %}
         </ul>
-
-    </body>
-</html>
+{% endblock %}
