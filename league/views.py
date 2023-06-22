@@ -17,7 +17,10 @@ class StandingsView(View):
 class ScheduleView(View):
     def get(self, request):
         matchups = Matchup.objects.all().order_by('week')
-        return render(request, 'league/schedule.html', {'matchups': matchups})
+        weeks=set([])
+        for m in matchups:
+            weeks.add(m.week)
+        return render(request, 'league/schedule.html', {'matchups': matchups, 'weeks': weeks})
 
 class MatchupDetailView(View):
     def get(self, request, matchup_id):
@@ -29,4 +32,7 @@ class TeamDetailView(View):
         team = Team.objects.get(id=team_id)
         players = team.player_set.all()
         matchups = Matchup.objects.filter(Q(home_team=team) | Q(away_team=team)).order_by('date')
-        return render(request, 'league/team_detail.html', {'team': team, 'players': players, 'matchups':matchups})
+        weeks=set([])
+        for m in matchups:
+            weeks.add(m.week)
+        return render(request, 'league/team_detail.html', {'team': team, 'players': players, 'matchups':matchups, 'weeks': weeks})

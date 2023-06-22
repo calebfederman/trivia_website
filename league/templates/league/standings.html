@@ -4,28 +4,32 @@
 
 {% block content %}
 
-    <h1>Standings</h1>
+    <h1 class="text-center">Full Standings</h1>
 
-    <table>
+    <table class="table table-hover">
         <thead>
             <tr>
-                <th>Team</th>
-                <th>Points</th>
-                <th>Wins</th>
-                <th>Losses</th>
-                <th>OT Losses</th>
+                <th scope="col">Team</th>
+                <th scope="col">Points</th>
+                <th scope="col">Wins</th>
+                <th scope="col">Losses</th>
+                <th scope="col">OT Losses</th>
             </tr>
         </thead>
         <tbody>
-            {% for team in teams %}
-            <tr>
-                <td><a href="{% url 'league:team_detail' team.id %}">{{ team.team_name }}</a></td>
-                <td>{{ team.points }}</td>
-                <td>{{ team.win_count }}</td>
-                <td>{{ team.loss_count }}</td>
-                <td>{{ team.ot_loss_count }}</td>
-            </tr>
-            {% endfor %}
+            {% if teams %}
+                {% for team in teams %}
+                <tr>
+                    <td><a href="{% url 'league:team_detail' team.id %}">{{ team.team_name }}</a></td>
+                    <td>{{ team.points }}</td>
+                    <td>{{ team.win_count }}</td>
+                    <td>{{ team.loss_count }}</td>
+                    <td>{{ team.ot_loss_count }}</td>
+                </tr>
+                {% endfor %}
+            {% else %}
+            <p>Standings aren't available at this time.</p>
+            {% endif %}
         </tbody>
     </table>
 

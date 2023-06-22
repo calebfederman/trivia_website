@@ -3,14 +3,39 @@
 {% block title %}Schedule{% endblock %}
 
 {% block content %}
-        <h1>Schedule</h1>
 
-        <ul>
-            {% for matchup in matchups %}
-            <li>
-                <a href="{% url 'league:matchup_detail' matchup.id %}">Week 
-                    {{matchup.week }} - {{ matchup.home_team }} vs {{matchup.away_team }}</a>
-            </li>
-            {% endfor %}
-        </ul>
+    
+    <p>{{ week }}</p>
+    
+
+    <h1>League Schedule</h1>
+    <br>
+
+    {% for week in weeks %}
+        <h4>Week {{ week }}</h4>
+        <div class="row row-cols-1 row-cols-md-3 g-4">            
+            {% if matchups %}
+                {% for matchup in matchups %}
+                    {% if week is matchup.week %}
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body bg-light">
+                                <strong><p class="card-title text-center">
+                                    <a href="{% url 'league:team_detail' matchup.away_team.id %}">{{ matchup.away_team }}</a> vs <a href="{% url 'league:team_detail' matchup.home_team.id %}">{{ matchup.home_team }}</a></p></strong>
+                                <p class="card-text text-center">Score: {{ matchup.away_team_score }} - {{ matchup.home_team_score }}</p>
+                                
+                            </div>
+                            <div class='card-footer text-center'><a href="{% url 'league:matchup_detail' matchup.id %}" class="btn btn-light">View Matchup</a></div>
+                        </div>
+                        <br>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <p>Sorry, the league schedule is not available at this time...</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+        
+
 {% endblock %}
